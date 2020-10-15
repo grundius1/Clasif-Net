@@ -5,7 +5,7 @@ import tensorflow as tf
 from tqdm import tqdm
 import csv
 
-model = load_model("modelg")
+model = load_model("modelg2")
 
 
 def image_resize(img_path):
