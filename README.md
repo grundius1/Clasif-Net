@@ -8,7 +8,7 @@
 this project is an image clasifier, based on the CIFAR10 dataset with 10 clases which are:
 
 - airplanes 
-![airplane1](./images/200.png)
+![airplane1](./images/200.png) ![airplane2](./images/214.png) ![airplane3](./images/221.png)
 - automobiles 
 ![automobile1](./images/61.png)
 - birds
