@@ -1,2 +1,4 @@
 data/.
 trash/.
+__pycache__/
+trash/
