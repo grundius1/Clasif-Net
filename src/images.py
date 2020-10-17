@@ -52,17 +52,17 @@ def get_prediction(img_path):
     img = image_resize(img_path)
     prediction = model.predict(img).tolist()[0]
     index = prediction.index(max(prediction))
-    return clases[index]
+    return clases[index], max(prediction)
 
 def dict_to_csv(dictionary):
-    csv_colums = ["id", "prediction"]
+    csv_colums = ["id", "label", "percentage"]
     csv_file = "predictions.csv"
     try:
         with open(csv_file, 'w') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=csv_colums)
             writer.writeheader()
             for id,data in dictionary.items():
-                writer.writerow({"id":id, "prediction" : data})
+                writer.writerow({"id":id, "label" : data[0], "percentage": data[1]})
     except IOError:
         print("I/O error")
 

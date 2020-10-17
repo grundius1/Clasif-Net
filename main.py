@@ -14,7 +14,6 @@ def main():
 
 
     args = parser.parse_args()
-    print(args)
     file_path = args.file
     folder_path = args.folder
 
