@@ -4,6 +4,7 @@ from keras.preprocessing.image import load_img,img_to_array
 import tensorflow as tf
 from tqdm import tqdm
 import csv
+import multiprocessing as mp
 
 model = load_model("modelg2")
 
@@ -32,12 +33,23 @@ def get_folder_imgs_pred(path):
     for item in os.listdir(path):
         imgs.append(path +"/"+item)
     iters = get_limit(len(imgs))
-    dic = {}
+    dic={}
+    print(f"starting")
+    '''
     for item in tqdm(range(iters)):
-        prediction = get_prediction(imgs[item])
+        prediction = get_prediction(imgs[item])#pool.imap_unordered(get_prediction,imgs)
         dic.update({f"{item+1}": prediction})
+    print(prediction)
+    print("done")
     return dict_to_csv(dic)
-
+    '''
+    pool=mp.Pool(mp.cpu_count())
+    predictions = pool.imap_unordered(get_prediction,imgs)
+    pool.close()
+    pool.join()
+    print(predictions)
+    return "a"
+    
 def get_limit(itnum):
     iters = -1
     while iters < 0:
@@ -52,7 +64,7 @@ def get_prediction(img_path):
     img = image_resize(img_path)
     prediction = model.predict(img).tolist()[0]
     index = prediction.index(max(prediction))
-    return clases[index], max(prediction)
+    return (clases[index], max(prediction))
 
 def dict_to_csv(dictionary):
     csv_colums = ["id", "label", "percentage"]
